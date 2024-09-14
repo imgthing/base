@@ -59,6 +59,7 @@ jobs:
             -   name: Build base image
                 uses: docker/build-push-action@v6
                 with:
+                    provenance: false
                     context: .
                     push: true
                     file: Dockerfile
