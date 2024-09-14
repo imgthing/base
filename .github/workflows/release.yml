@@ -46,8 +46,10 @@ jobs:
                 uses: actions/cache@v4
                 with:
                     path: /tmp/.buildx-cache
-                    key: "buildx-${{ hashFiles('Dockerfile') }}"
-                    restore-keys: "buildx-"
+                    key: "buildx-${{ hashFiles('Dockerfile') }}-${{ github.run_id }}"
+                    restore-keys: |
+                        buildx-${{ hashFiles('Dockerfile') }}
+                        buildx-
 
             -   name: Login to Docker Hub
                 uses: docker/login-action@v3
