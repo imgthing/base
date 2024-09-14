@@ -70,7 +70,7 @@ RUN curl https://gitlab.com/api/v4/projects/5024297/packages/generic/pdftk-java/
 
 FROM dunglas/frankenphp:${FRANKENPHP_VERSION}-php${PHP_VERSION}-alpine
 
-RUN install-php-extensions ffi opcache
+RUN install-php-extensions intl ffi opcache
 
 RUN apk add --no-cache \
     glib \
