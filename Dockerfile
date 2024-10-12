@@ -1,11 +1,14 @@
-ARG FRANKENPHP_VERSION=1.2.5
+ARG ROADRUNNER_VERSION=2024.2.1
 ARG PHP_VERSION=8.3.11
 ARG VIPS_VERSION=8.15.3
 
+ARG ALPINE=3.20
 ARG GRAALVM_VERSION=22.3.3
 ARG PDFTK_VERSION=3.3.3
 
-FROM alpine:3.20 AS vips
+FROM ghcr.io/roadrunner-server/roadrunner:${ROADRUNNER_VERSION} AS roadrunner
+
+FROM alpine:${ALPINE} AS vips
 
 RUN apk add --no-cache \
 	build-base \
@@ -68,9 +71,13 @@ RUN curl https://gitlab.com/api/v4/projects/5024297/packages/generic/pdftk-java/
     	-H:GenerateDebugInfo=0
 
 
-FROM dunglas/frankenphp:${FRANKENPHP_VERSION}-php${PHP_VERSION}-alpine
+FROM php:8.3.12-cli-alpine${ALPINE}
 
-RUN install-php-extensions intl ffi opcache
+COPY --from=roadrunner /usr/bin/rr /usr/local/bin/rr
+
+COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+
+RUN install-php-extensions intl ffi opcache sockets
 
 RUN apk add --no-cache \
     glib \
