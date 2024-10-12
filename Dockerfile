@@ -1,5 +1,5 @@
 ARG ROADRUNNER_VERSION=2024.2.1
-ARG PHP_VERSION=8.3.11
+ARG PHP_VERSION=8.3.12
 ARG VIPS_VERSION=8.15.3
 
 ARG ALPINE=3.20
@@ -71,7 +71,7 @@ RUN curl https://gitlab.com/api/v4/projects/5024297/packages/generic/pdftk-java/
     	-H:GenerateDebugInfo=0
 
 
-FROM php:8.3.12-cli-alpine${ALPINE}
+FROM php:${PHP_VERSION}-cli-alpine${ALPINE}
 
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 
