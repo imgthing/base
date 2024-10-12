@@ -73,8 +73,6 @@ RUN curl https://gitlab.com/api/v4/projects/5024297/packages/generic/pdftk-java/
 
 FROM php:8.3.12-cli-alpine${ALPINE}
 
-COPY --from=roadrunner /usr/bin/rr /usr/local/bin/rr
-
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 
 RUN install-php-extensions intl ffi opcache sockets
@@ -106,6 +104,7 @@ RUN apk add --no-cache \
 
 COPY --from=vips /usr/local /usr/local
 COPY --from=graalvm /build/pdftk /usr/bin/pdftk
+COPY --from=roadrunner /usr/bin/rr /usr/local/bin/rr
 
 WORKDIR /app
 
