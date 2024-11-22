@@ -19,9 +19,9 @@ permissions:
 env:
     TAGS: ${{ format('ghcr.io/{0}:{1}', github.repository, startsWith(github.ref, 'refs/tags/') && github.ref_name || 'dev') }}
 
-    VIPS_VERSION: 8.15.3
+    VIPS_VERSION: 8.16.0
 
-    PHP_VERSION: 8.3.11
+    PHP_VERSION: 8.4.1
     FRANKENPHP_VERSION: 1.2.5
 
     GRAALVM_VERSION: 22.3.3
