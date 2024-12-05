@@ -75,7 +75,7 @@ FROM php:${PHP_VERSION}-cli-alpine${ALPINE}
 
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 
-RUN install-php-extensions intl ffi opcache sockets
+RUN install-php-extensions intl ffi opcache sockets sysvsem
 
 RUN apk add --no-cache \
     glib \
