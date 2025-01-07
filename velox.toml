@@ -12,28 +12,27 @@ token = "${RT_TOKEN}"
 
 [github.plugins]
 # LOGS
-logger = { ref = "v5.0.4", owner = "roadrunner-server", repository = "logger" }
-lock = { ref = "v5.0.4", owner = "roadrunner-server", repository = "lock" }
-rpc = { ref = "v5.0.4", owner = "roadrunner-server", repository = "rpc" }
+logger = { ref = "v5.1.1", owner = "roadrunner-server", repository = "logger" }
+lock = { ref = "v5.1.1", owner = "roadrunner-server", repository = "lock" }
+rpc = { ref = "v5.1.1", owner = "roadrunner-server", repository = "rpc" }
 
 # HTTP + MIDDLEWARE
-http = { ref = "v5.0.4", owner = "roadrunner-server", repository = "http" }
-gzip = { ref = "v5.0.4", owner = "roadrunner-server", repository = "gzip" }
+http = { ref = "v5.1.1", owner = "roadrunner-server", repository = "http" }
 imgthing = { ref = "main", owner = "imgthing", repository = "base", folder = "rr-plugin", replace = "/src/rr-plugin" }
 
 # SERVER
-server = { ref = "v5.1.2", owner = "roadrunner-server", repository = "server" }
+server = { ref = "v5.2.2", owner = "roadrunner-server", repository = "server" }
 
 # SERVICE aka lightweit systemd
-service = { ref = "v5.0.4", owner = "roadrunner-server", repository = "service" }
+service = { ref = "v5.1.1", owner = "roadrunner-server", repository = "service" }
 
 # KV
-kv = { ref = "v5.0.4", owner = "roadrunner-server", repository = "kv" }
-memory = { ref = "v5.0.4", owner = "roadrunner-server", repository = "memory" }
+kv = { ref = "v5.2.1", owner = "roadrunner-server", repository = "kv" }
+memory = { ref = "v5.2.1", owner = "roadrunner-server", repository = "memory" }
 
 # HEALTHCHECKS + READINESS CHECKS
-status = { ref = "v5.0.4", owner = "roadrunner-server", repository = "status" }
+status = { ref = "v5.1.1", owner = "roadrunner-server", repository = "status" }
 
 [log]
-level = "debug"
+level = "info"
 mode = "development"
