@@ -5,14 +5,13 @@ ARG ALPINE=3.20
 
 FROM ghcr.io/roadrunner-server/velox:latest AS rr-builder
 
-RUN --mount=type=secret,id=RT_TOKEN,env=RT_TOKEN
-
 COPY . /src
 
 WORKDIR /src
 
 ENV CGO_ENABLED=0
-RUN vx build -c velox.toml -o /usr/bin/
+RUN --mount=type=secret,id=RT_TOKEN,env=RT_TOKEN \
+    vx build -c velox.toml -o /usr/bin/
 
 FROM alpine:${ALPINE} AS vips
 
