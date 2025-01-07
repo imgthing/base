@@ -1,12 +1,18 @@
-ARG ROADRUNNER_VERSION=2024.3.0
 ARG PHP_VERSION=8.4.1
 ARG VIPS_VERSION=8.16.0
 
 ARG ALPINE=3.20
-ARG GRAALVM_VERSION=22.3.3
-ARG PDFTK_VERSION=3.3.3
 
-FROM ghcr.io/roadrunner-server/roadrunner:${ROADRUNNER_VERSION} AS roadrunner
+FROM ghcr.io/roadrunner-server/velox:latest AS rr-builder
+
+ARG RT_TOKEN
+
+COPY . /src
+
+WORKDIR /src
+
+ENV CGO_ENABLED=0
+RUN vx build -c velox.toml -o /usr/bin/
 
 FROM alpine:${ALPINE} AS vips
 
@@ -53,29 +59,10 @@ RUN tar xf vips-${VIPS_VERSION}.tar.xz \
 	&& meson install
 
 
-FROM ghcr.io/graalvm/graalvm-ce:${GRAALVM_VERSION} AS graalvm
-
-ARG PDFTK_VERSION
-
-RUN gu install native-image
-
-WORKDIR /build
-
-RUN curl https://gitlab.com/api/v4/projects/5024297/packages/generic/pdftk-java/v${PDFTK_VERSION}/pdftk-all.jar --output pdftk-all.jar \
-	&& curl https://gitlab.com/pdftk-java/pdftk/-/raw/v${PDFTK_VERSION}/META-INF/native-image/reflect-config.json --output reflect-config.json \
-	&& curl https://gitlab.com/pdftk-java/pdftk/-/raw/v${PDFTK_VERSION}/META-INF/native-image/resource-config.json --output resource-config.json \
-	&& native-image --static -jar pdftk-all.jar \
-    	-H:Name=pdftk \
-    	-H:ResourceConfigurationFiles='resource-config.json' \
-    	-H:ReflectionConfigurationFiles='reflect-config.json' \
-    	-H:GenerateDebugInfo=0
-
-
 FROM php:${PHP_VERSION}-cli-alpine${ALPINE}
-
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 
-RUN install-php-extensions intl ffi opcache sockets sysvsem
+RUN install-php-extensions ffi opcache sockets protobuf
 
 RUN apk add --no-cache \
     glib \
@@ -103,9 +90,7 @@ RUN apk add --no-cache \
     pango
 
 COPY --from=vips /usr/local /usr/local
-COPY --from=graalvm /build/pdftk /usr/bin/pdftk
-COPY --from=roadrunner /usr/bin/rr /usr/local/bin/rr
+COPY --from=rr-builder /usr/bin/rr /usr/local/bin/rr
 
 WORKDIR /app
-
 RUN vips --vips-config

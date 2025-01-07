@@ -1,0 +1,39 @@
+[roadrunner]
+# ref -> reference, tag, commit or branch
+ref = "v2024.3.1"
+
+# the debug option is used to build RR with debug symbols to profile it with pprof
+[debug]
+enabled = false
+
+[github]
+[github.token]
+token = "${RT_TOKEN}"
+
+[github.plugins]
+# LOGS
+logger = { ref = "v5.0.4", owner = "roadrunner-server", repository = "logger" }
+lock = { ref = "v5.0.4", owner = "roadrunner-server", repository = "lock" }
+rpc = { ref = "v5.0.4", owner = "roadrunner-server", repository = "rpc" }
+
+# HTTP + MIDDLEWARE
+http = { ref = "v5.0.4", owner = "roadrunner-server", repository = "http" }
+gzip = { ref = "v5.0.4", owner = "roadrunner-server", repository = "gzip" }
+imgthing = { ref = "main", owner = "imgthing", repository = "base", folder = "rr-plugin", replace = "/src/rr-plugin" }
+
+# SERVER
+server = { ref = "v5.1.2", owner = "roadrunner-server", repository = "server" }
+
+# SERVICE aka lightweit systemd
+service = { ref = "v5.0.4", owner = "roadrunner-server", repository = "service" }
+
+# KV
+kv = { ref = "v5.0.4", owner = "roadrunner-server", repository = "kv" }
+memory = { ref = "v5.0.4", owner = "roadrunner-server", repository = "memory" }
+
+# HEALTHCHECKS + READINESS CHECKS
+status = { ref = "v5.0.4", owner = "roadrunner-server", repository = "status" }
+
+[log]
+level = "debug"
+mode = "development"

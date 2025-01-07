@@ -1,0 +1,6 @@
+services:
+    imgthing:
+        build:
+            context: .
+            args:
+                RT_TOKEN:
