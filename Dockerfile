@@ -5,7 +5,7 @@ ARG ALPINE=3.20
 
 FROM ghcr.io/roadrunner-server/velox:latest AS rr-builder
 
-ARG RT_TOKEN
+RUN --mount=type=secret,id=RT_TOKEN,env=RT_TOKEN
 
 COPY . /src
 
