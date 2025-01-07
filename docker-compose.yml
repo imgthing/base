@@ -2,5 +2,9 @@ services:
     imgthing:
         build:
             context: .
-            args:
-                RT_TOKEN:
+            secrets:
+                -   gh_token
+
+secrets:
+    gh_token:
+        file: .gh_token

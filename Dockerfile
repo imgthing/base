@@ -10,7 +10,7 @@ COPY . /src
 WORKDIR /src
 
 ENV CGO_ENABLED=0
-RUN --mount=type=secret,id=RT_TOKEN,env=RT_TOKEN \
+RUN --mount=type=secret,id=gh_token,env=RT_TOKEN \
     vx build -c velox.toml -o /usr/bin/
 
 FROM alpine:${ALPINE} AS vips
